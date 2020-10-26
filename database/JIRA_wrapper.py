@@ -6,27 +6,53 @@ from database.create_JIRA_task import JiraTasks
 
 
 class JIRAWrapper:
-    user_name = "talent.bolgatty20@gmail.com"
-    api_token = "WFDMSsAdUw8nukLagC4a13D7"
-    server = "https://talent-jira.atlassian.net/"
+    user_name = "gayumystry@gmail.com"
+    api_token = "tJTeERinbNpMP5RRHSJ93484"
+    server = "https://personaltesting2020.atlassian.net/"
     jira = JiraTasks(user_name, api_token, server)
 
     def JIRA_connect(self):
         self.jira = JiraTasks(self.user_name, self.api_token, self.server)
 
-    def get_all_resumes(self):
-        resume_list = self.jira.fetch_all_resumes()
+    def get_all_tickets_summary(self):
+        resume_list = self.jira.fetch_all_summary()
         return resume_list
 
-    def add_new_issue_JiraDB(self,json_string,summary,label):
-        new_candidate_data = {
-            "project": "TH",
+    def get_all_tickets_desc(self):
+        resume_list = self.jira.fetch_all_desc()
+        return resume_list
+
+    def add_new_issue_JiraDB(self, json_string, summary, label):
+        new_data = {
+            "project": "TES",
             "summary": summary,
             "description": json_string,
-            "labels":label,
+            "labels": label,
             "issuetype": {"name": "Task"}
         }
-        ret = self.jira.create_new_candidate(new_candidate_data)
-        print(ret)
+        ret = self.jira.create_issue(new_data)
+        return ret
+
+    def update_jira(self, key, data):
+        self.jira.update_issue_fields(key, data)
+
+    def delete_issue(self, issue_key):
+        self.jira.delete_issue_jira(issue_key)
+
+    def retrive_summary(self, label):
+        summary_lists = self.jira.fetch_summary_basedon_label(label)
+        return summary_lists
+
+    def retrive_desc(self, label):
+        desc_lists = self.jira.fetch_desc_basedon_label(label)
+        return desc_lists
+
+    def retrieve_spefic_issue_desc(self, issue_key):
+        desc = self.jira.fetch_spefic_issue_desc(issue_key)
+        return desc
+
+    def attach_file_in_jira(self, issue_key, file):
+        self.jira.attach_file_to_jira_issue(issue_key, file)
+
 
 
