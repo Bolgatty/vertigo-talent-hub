@@ -3,8 +3,8 @@ author:Femy
 """
 
 class ConnectionUtilities:
-    user_name = "femyanish@gmail.com"
-    api_token = "82CbyMKKDD7MsFl6wSlv0365"
-    server = "https://talenthunt.atlassian.net"
+    user_name = "xxx@abc.com"
+    api_token = "api_token"
+    server = "url for atlassian Jira"
 
-    project_name = "TAL"
+    project_name = "project name"
