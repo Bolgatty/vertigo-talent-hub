@@ -2,17 +2,17 @@
 author : Ashwini
 date: 25/9/2020
 """
-from src.db.create_JIRA_task import JiraTasks
-from src.db.connection_utilities import ConnectionUtilities as cu
+from database.create_JIRA_task import JiraTasks
 
 
 class JIRAWrapper:
-    def __init__(self):
-        self.jira = self.JIRA_connect()
+    user_name = "gayumystry@gmail.com"
+    api_token = "tJTeERinbNpMP5RRHSJ93484"
+    server = "https://personaltesting2020.atlassian.net/"
+    jira = JiraTasks(user_name, api_token, server)
 
     def JIRA_connect(self):
-        jira = JiraTasks(cu.user_name, cu.api_token, cu.server)
-        return jira
+        self.jira = JiraTasks(self.user_name, self.api_token, self.server)
 
     def get_all_tickets_summary(self):
         resume_list = self.jira.fetch_all_summary()
@@ -24,7 +24,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": cu.project_name,
+            "project": "TES",
             "summary": summary,
             "description": json_string,
             "labels": label,
@@ -53,3 +53,4 @@ class JIRAWrapper:
 
     def attach_file_in_jira(self, issue_key, file):
         self.jira.attach_file_to_jira_issue(issue_key, file)
+

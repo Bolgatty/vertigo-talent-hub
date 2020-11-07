@@ -3,7 +3,6 @@ author : Femy
 date: 25/9/2020
 """
 from jira import JIRA
-from src.db.connection_utilities import ConnectionUtilities as cu
 
 
 class JiraTasks:
@@ -28,21 +27,21 @@ class JiraTasks:
 
     def fetch_all_summary(self):
         summary_list = []
-        all_issues = self.jira.search_issues('project='+cu.project_name)
+        all_issues = self.jira.search_issues('project=TES')
         for issues in all_issues:
             summary_list.append(issues.fields.summary)
         return summary_list
 
     def fetch_all_desc(self):
         desc_list = []
-        all_issues = self.jira.search_issues('project='+cu.project_name)
+        all_issues = self.jira.search_issues('project=TES')
         for issues in all_issues:
             desc_list.append(issues.fields.description)
         return desc_list
 
     def fetch_desc_basedon_label(self, label):
         desc_list = []
-        all_issues = self.jira.search_issues('project='+cu.project_name)
+        all_issues = self.jira.search_issues('project=TES')
         for issues in all_issues:
             labels = issues.fields.labels
             if labels and labels[0] == label:
@@ -51,7 +50,7 @@ class JiraTasks:
 
     def fetch_summary_basedon_label(self, label):
         summary_list = []
-        all_issues = self.jira.search_issues('project='+cu.project_name)
+        all_issues = self.jira.search_issues('project=TES')
         for issues in all_issues:
             labels = issues.fields.labels
             if labels and labels[0] == label:
