@@ -3,8 +3,8 @@ from docx2pdf import convert
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx import Document
 from docx.shared import Inches
-from src.jd_manager import JDManager as jd
-from src.jobs_table_dislpay import JobsTable as jt
+from src.db.jd_manager import JDManager as jd
+from src.gui.jobs_table_display_gui import JobsTable as jt
 from tkinter import messagebox as mb
 
 class JobGeneratepdf:
@@ -50,4 +50,4 @@ class JobGeneratepdf:
         filename = job_dict['job_id']
         final.save(filename+'.docx')
 
-        # convert(filename+'.docx', filename+'.pdf')
+        convert(filename+'.docx', filename+'.pdf')
