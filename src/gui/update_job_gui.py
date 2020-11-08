@@ -221,7 +221,7 @@ class UpdateJob:
         clr_button.pack(side="left", padx=10, pady=2)
 
         bullet_button = tk.Button(format_button, text="Bullet", command=buttelize)
-        photo_align = Image.open("icons/list_bullets.png")
+        photo_align = Image.open("images/icons/list_bullets.png")
         photo_align = photo_align.resize((20, 20), Image.ANTIALIAS)
         self.u_image_align_right = ImageTk.PhotoImage(photo_align)
         bullet_button.config(image=self.u_image_align_right)

@@ -207,7 +207,7 @@ class AddJob:
         clr_button.pack(side="left", pady=2, padx=10)
 
         bullet_button = tk.Button(format_button, text="Bullet", command=buttelize, anchor='e')
-        photo_align = Image.open("icons/list_bullets.png")
+        photo_align = Image.open("images/icons/list_bullets.png")
         photo_align = photo_align.resize((20, 20), Image.ANTIALIAS)
         self.image_align_right = ImageTk.PhotoImage(photo_align)
         bullet_button.config(image=self.image_align_right)
