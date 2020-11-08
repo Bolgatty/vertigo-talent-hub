@@ -19,8 +19,8 @@ class JobsTable:
         self.label_font = 5
         self.label_bg = 'SystemButtonFace'
         self.bg_frame = 'white'
-        self.im_checked = ImageTk.PhotoImage(Image.open("check.png"))
-        self.im_unchecked = ImageTk.PhotoImage(Image.open("uncheck.png"))
+        self.im_checked = ImageTk.PhotoImage(Image.open("images/icons/check.png"))
+        self.im_unchecked = ImageTk.PhotoImage(Image.open("images/icons/uncheck.png"))
 
     def jobs_table(self, first_frame):
         """

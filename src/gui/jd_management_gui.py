@@ -41,8 +41,6 @@ class JobManagement:
         self.bg_frame = 'white'
         self.no_of_hires = None
         self.phone_no = None
-        self.im_checked = ImageTk.PhotoImage(Image.open("check.png"))
-        self.im_unchecked = ImageTk.PhotoImage(Image.open("uncheck.png"))
         self.job_management_gui()
 
     def job_management_gui(self):
@@ -53,7 +51,7 @@ class JobManagement:
         self.first_frame = tk.Frame(self.root, bg=self.bg_frame)
         self.first_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-        img = ImageTk.PhotoImage(Image.open("poly.png"))
+        img = ImageTk.PhotoImage(Image.open("images/poly.png"))
         panel = tk.Label(self.first_frame, image=img)
         panel.image = img
         panel.place(relx=0, rely=0)
