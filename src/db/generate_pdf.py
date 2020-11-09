@@ -1,7 +1,7 @@
 from docx2pdf import convert
-#from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx import Document
+from docx.shared import Pt
 from docx.shared import Inches
 from src.db.jd_manager import JDManager as jd
 from src.gui.jobs_table_display_gui import JobsTable as jt
@@ -25,24 +25,28 @@ class JobGeneratepdf:
     def pdf_generator(self, issue_key):
 
         final = Document()
-        final.add_picture('check.png', width=Inches(1.25))
+        final.add_picture('images/logo.PNG', width=Inches(1.50))
         last_pic = final.paragraphs[-1]
         last_pic.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
+        final.add_heading('About US', 0)
         about_us = Document('about.docx')
-        all_paras = about_us.paragraphs
-        print(len(all_paras))
-        for para in all_paras:
-            print(para.text)
-            final.add_paragraph(para.text)
 
         # for element in about_us.element.body:
         #     final.element.body.append(element)
 
+        all_paras = about_us.paragraphs
+        print(len(all_paras))
+
+        for para in all_paras:
+            print(para.text)
+            paragraph = final.add_paragraph(para.text)
+            paragraph_format = paragraph.paragraph_format
+            paragraph_format.space_after = Pt(2)
+
         job_dict = jd().get_particular_desc(issue_key)
 
-        final.add_heading('Job ID:', 1)
-        final.add_paragraph(job_dict['job_id'])
+        final.add_heading(job_dict['job_id']+' : ' + job_dict['job_title'], 1)
 
         final.add_heading('Job Description:', 1)
         final.add_paragraph(job_dict['job_description'])
@@ -50,4 +54,4 @@ class JobGeneratepdf:
         filename = job_dict['job_id']
         final.save(filename+'.docx')
 
-        convert(filename+'.docx', filename+'.pdf')
+        # convert(filename+'.docx', filename+'.pdf')
