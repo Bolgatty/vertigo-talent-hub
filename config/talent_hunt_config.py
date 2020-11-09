@@ -6,7 +6,7 @@ import configparser
 from configparser import ConfigParser
 
 # create a file to save the path of .ini file and create a config .
-file = r'C:\Projects2020\Talent Hunt Project\vertigo-talent-hub\config\talenthunt.ini'
+file = r'...../....../'
 config = ConfigParser()
 config.read(file)
 
