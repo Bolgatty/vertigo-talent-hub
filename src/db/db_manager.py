@@ -2,8 +2,8 @@
 author: Femy, Padma
 Date : 09/10/2020
 """
-from tools.json_parser import JsonParser as js
-from database.JIRA_wrapper import JIRAWrapper as jw
+from src.tools.json_parser import JsonParser as js
+from src.db.JIRA_wrapper import JIRAWrapper as jw
 
 class DatabaseManager:
 
