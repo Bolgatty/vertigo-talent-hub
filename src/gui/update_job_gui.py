@@ -11,6 +11,10 @@ class UpdateJob:
     def __init__(self, root, first_frame):
         self.first_frame = first_frame
         self.root = root
+        self.top = tk.Toplevel(self.root)
+        self.top.geometry('700x800')
+        self.top.grab_set()
+        self.top.resizable(False, False)
         self.bg_panel_header = '#000000'
         self.button_color = '#00917c'
         self.save_button_color = 'red'
@@ -38,12 +42,7 @@ class UpdateJob:
         job_description = selected_job_description['job_description']
         type_of_employment = selected_job_description['type_of_employment']
 
-        top = tk.Toplevel(self.root)
-        top.geometry('700x800')
-        top.grab_set()
-        top.resizable(False, False)
-
-        self.u_wrapper = tk.Frame(top, bg='white')
+        self.u_wrapper = tk.Frame(self.top, bg='white')
         self.u_wrapper.pack(fill="both", expand="yes", padx=10, pady=10)
 
         canvas = tk.Canvas(self.u_wrapper, bg="#ed9ef0",width=1,height=1)
@@ -246,17 +245,17 @@ class UpdateJob:
         inner_frame_11.pack(fill="x", pady=10)
 
         update_button = tk.Button(inner_frame_11, text="Save", bg=self.button_color, font=self.button_font,
-                                fg=self.button_fg, command=threading.Thread(target=lambda: self.update_jira(issue_key, selected_job_id, top)).start)
+                                fg=self.button_fg, command=threading.Thread(target=lambda: self.update_jira(issue_key, selected_job_id, self.top)).start)
         update_button.pack(side="left", padx=180, pady=20)
 
-        def cancel():
-            top.destroy()
-            self.root.grab_set()
-
         cancel_button = tk.Button(inner_frame_11, text="Cancel", bg=self.button_color, font=self.button_font,
-                                  fg=self.button_fg, command=top.destroy)
+                                  fg=self.button_fg, command=self.cancel)
         cancel_button.pack(side="left", pady=20)
-        top.mainloop()
+        self.top.mainloop()
+
+    def cancel(self):
+        self.top.destroy()
+        self.root.grab_set()
 
     def update_button(self):
         # print('Inside Update button function :', jt.selected_job_id[0], jt.issue_key_list[0])
@@ -315,6 +314,6 @@ class UpdateJob:
             jd().update_job(issue_key, update_jb_dict)
             mb.showinfo("Info", "Selected Jobs updated successfully")
             jt(self.root).jobs_table(self.first_frame)
-            top.destroy()
+            self.cancel()
         else:
             mb.showwarning('Warning', 'Please fill in the all the details')
