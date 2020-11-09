@@ -6,7 +6,10 @@ import tkinter as tk
 from time import strftime, time
 
 import datetime as dt
+#from src.gui.import_resumeGUI import ImportResumeGUI as irg
 from src.gui.import_resumeGUI import ImportResumeGUI as irg
+from src.gui.jd_management_gui import JobManagement as jbm
+#from src.tools.globals import Globals as gb
 from src.tools.globals import Globals as gb
 
 
@@ -48,12 +51,13 @@ class TalentHubGUI:
         lbl_clock.grid(row=13, column=40, padx=50)
 
     def left_frame(self):
-        self.create_button("Import Resume", row=5, col=0, padx=30, pady=10,_class=irg)
+        self.create_button("Import Resume", row=5, col=0, padx=30, pady=10, _class=irg)
         self.create_button("New Candidate", row=7, col=0, padx=30, pady=10)
         self.create_button("Delete Candidate", row=9, col=0, padx=30, pady=10)
-        self.create_button("Generate JD", row=11, col=0, padx=30, pady=10)
-        self.create_button("Update Job", row=13, col=0, padx=30, pady=10)
-        self.create_button("Remove Job", row=15, col=0, padx=30, pady=10)
+        self.create_button("Job Manage", row=15, col=0, padx=30, pady=10, _class=jbm)
+        #self.create_button("Generate JD", row=11, col=0, padx=30, pady=10)
+        #self.create_button("Update Job", row=13, col=0, padx=30, pady=10)
+        #self.create_button("Remove Job", row=15, col=0, padx=30, pady=10)
         self.create_button("Admin", row=17, col=0, padx=30, pady=10)
 
     def middle_frame(self):
@@ -82,5 +86,14 @@ class TalentHubGUI:
 
     def new_window(self, _class):
         win_import_resume = tk.Toplevel(self.root)
-        win_import_resume.attributes("-topmost", True)
-        _class(win_import_resume, self.root)
+        _class(win_import_resume)
+        #win_import_resume.attributes("-topmost", False)
+
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    #root.attributes("-topmost", False)
+    #root.lower()
+    TalentHubGUI(root)
+    root.mainloop()
+

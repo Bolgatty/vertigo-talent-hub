@@ -249,6 +249,10 @@ class UpdateJob:
                                 fg=self.button_fg, command=threading.Thread(target=lambda: self.update_jira(issue_key, selected_job_id, top)).start)
         update_button.pack(side="left", padx=180, pady=20)
 
+        def cancel():
+            top.destroy()
+            self.root.grab_set()
+
         cancel_button = tk.Button(inner_frame_11, text="Cancel", bg=self.button_color, font=self.button_font,
                                   fg=self.button_fg, command=top.destroy)
         cancel_button.pack(side="left", pady=20)
