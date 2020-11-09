@@ -22,6 +22,7 @@ class JobManagement:
          :param win: an instance of Tkinter’s Tk class that creates a window
          """
         self.root = win
+        self.root.grab_set()
         self.issue_key = None
         self.entry_company_name = None
         self.entry_job_id = None
@@ -74,12 +75,6 @@ class JobManagement:
         style.configure("TButton", font=(None, 12, 'bold'))
 
         jt(self.root).jobs_table(self.first_frame)
-
-
-win = tk.Tk()
-obj = JobManagement(win)
-win.mainloop()
-
 
 
 

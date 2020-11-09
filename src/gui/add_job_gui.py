@@ -234,10 +234,16 @@ class AddJob:
                                 fg=self.button_fg, command=threading.Thread(target=lambda: self.save_details(jb_dict, top)).start)
         save_button.pack(side="left", padx=180, pady=20)
 
+        def cancel():
+            top.destroy()
+            self.root.grab_set()
+
         cancel_button = tk.Button(inner_frame_11, text="Cancel", bg=self.button_color, font=self.button_font,
-                                  fg=self.button_fg, command=top.destroy)
+                                  fg=self.button_fg, command=cancel)
         cancel_button.pack(side="left", pady=20)
         top.mainloop()
+
+
 
     def save_details(self, jb_dict, top):
         """
