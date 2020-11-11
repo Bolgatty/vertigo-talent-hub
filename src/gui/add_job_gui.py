@@ -10,12 +10,9 @@ from src.gui.jobs_table_display_gui import JobsTable as jt
 class AddJob:
 
     def __init__(self, root, first_frame):
+        print("Addjob contructor")
         self.first_frame = first_frame
         self.root = root
-        self.top = tk.Toplevel(self.root)
-        self.top.geometry('700x800')
-        self.top.grab_set()
-        self.top.resizable(False, False)
         self.bg_panel_header = '#000000'
         self.button_color = '#00917c'
         self.save_button_color = 'red'
@@ -33,6 +30,11 @@ class AddJob:
 
         self.id = jd().job_id_generator()
         self.job_id = 'JD0'+str(self.id)
+
+        self.top = tk.Toplevel(self.root)
+        self.top.geometry('700x800')
+        self.top.grab_set()
+        self.top.resizable(False, False)
 
         # self.first_frame.place_forget()
 
@@ -206,7 +208,7 @@ class AddJob:
         clr_button.pack(side="left", pady=2, padx=10)
 
         bullet_button = tk.Button(format_button, text="Bullet", command=buttelize, anchor='e')
-        photo_align = Image.open("images/icons/list_bullets.png")
+        photo_align = Image.open("src/gui/images/icons/list_bullets.png")
         photo_align = photo_align.resize((20, 20), Image.ANTIALIAS)
         self.image_align_right = ImageTk.PhotoImage(photo_align)
         bullet_button.config(image=self.image_align_right)
@@ -279,22 +281,25 @@ class AddJob:
         try:
             self.no_of_hires = int(self.entry_no_of_hires.get())
             jb_dict['no_of_hires'] = self.no_of_hires
-        except ValueError:
-            mb.showerror("Error", "Please give valid number in No. of hires field!")
+        except (ValueError, AttributeError):
+            mb.showerror("Error", "Please give valid number in No. of hires field!", parent=self.top)
             self.entry_no_of_hires.focus()
 
         try:
             self.phone_no = self.entry_phone_no.get()
             jb_dict['phone_no'] = self.no_of_hires
-        except ValueError:
-            mb.showerror("Error", "Please enter a valid Phone No.!")
+        except (ValueError, AttributeError):
+            mb.showerror("Error", "Please enter a valid Phone No.!", parent=self.top)
             self.entry_phone_no.focus()
 
-        if self.no_of_hires and self.phone_no:
-            jd().add_issue_key(jb_dict)
-            jd().update_job_id_tracker(self.id)
-            mb.showinfo('Saved', 'Saved New JOB into Jira Database')
-            jt(self.root).jobs_table(self.first_frame)
-            self.cancel()
-        else:
-            mb.showwarning('Warning', 'Please fill in the all the details')
+        try:
+            if self.no_of_hires and self.phone_no:
+                jd().add_issue_key(jb_dict)
+                jd().update_job_id_tracker(self.id)
+                mb.showinfo('Saved', 'Saved New JOB into Jira Database', parent=self.top)
+                jt(self.root).jobs_table(self.first_frame)
+                self.cancel()
+            else:
+                mb.showwarning('Warning', 'Please fill in the all the details', parent=self.top)
+        except (ValueError, AttributeError) as e:
+            print(e)

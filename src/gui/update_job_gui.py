@@ -9,12 +9,9 @@ import threading
 
 class UpdateJob:
     def __init__(self, root, first_frame):
+        print("Update contructor")
         self.first_frame = first_frame
         self.root = root
-        self.top = tk.Toplevel(self.root)
-        self.top.geometry('700x800')
-        self.top.grab_set()
-        self.top.resizable(False, False)
         self.bg_panel_header = '#000000'
         self.button_color = '#00917c'
         self.save_button_color = 'red'
@@ -28,6 +25,11 @@ class UpdateJob:
         """
              displays the fields required for add job screen
         """
+        self.top = tk.Toplevel(self.root)
+        self.top.geometry('700x800')
+        self.top.grab_set()
+        self.top.resizable(False, False)
+
         selected_job_description = jd().get_particular_desc(issue_key)
         selected_job_description['issue_key'] = issue_key
         job_id = selected_job_description['job_id']
@@ -220,7 +222,7 @@ class UpdateJob:
         clr_button.pack(side="left", padx=10, pady=2)
 
         bullet_button = tk.Button(format_button, text="Bullet", command=buttelize)
-        photo_align = Image.open("images/icons/list_bullets.png")
+        photo_align = Image.open("src/gui/images/icons/list_bullets.png")
         photo_align = photo_align.resize((20, 20), Image.ANTIALIAS)
         self.u_image_align_right = ImageTk.PhotoImage(photo_align)
         bullet_button.config(image=self.u_image_align_right)
@@ -260,10 +262,10 @@ class UpdateJob:
     def update_button(self):
         # print('Inside Update button function :', jt.selected_job_id[0], jt.issue_key_list[0])
         if jt.selected_job_id:
-            if mb.askyesno("Confirm Update", "Are you sure you want to update the selected job ?"):
+            if mb.askyesno("Confirm Update", "Are you sure you want to update the selected job ?", parent=self.root):
                 self.update_job_details(jt.selected_job_id[0], jt.issue_key_list[0])
         else:
-            mb.showwarning("Error", "Please select the job you want to update")
+            mb.showwarning("Error", "Please select the job you want to update", parent=self.root)
 
     def update_jira(self, issue_key, selected_job_id, top):
 
@@ -299,21 +301,29 @@ class UpdateJob:
         try:
             self.no_of_hires = int(self.u_entry_no_of_hires.get())
             update_jb_dict['no_of_hires'] = self.no_of_hires
-        except ValueError:
-            mb.showerror("Error", "Please give valid number in No. of hires field!")
+        except (ValueError, AttributeError):
+            mb.showerror("Error", "Please give valid number in No. of hires field!", parent=self.top)
             self.u_entry_no_of_hires.focus()
 
         try:
             self.phone_no = self.u_entry_phone_no.get()
             update_jb_dict['phone_no'] = self.no_of_hires
-        except ValueError:
-            mb.showerror("Error", "Please enter a valid Phone No.!")
+        except (ValueError, AttributeError):
+            mb.showerror("Error", "Please enter a valid Phone No.!", parent=self.top)
             self.u_entry_phone_no.focus()
 
-        if self.no_of_hires and self.phone_no:
-            jd().update_job(issue_key, update_jb_dict)
-            mb.showinfo("Info", "Selected Jobs updated successfully")
-            jt(self.root).jobs_table(self.first_frame)
-            self.cancel()
-        else:
-            mb.showwarning('Warning', 'Please fill in the all the details')
+        try:
+            if self.no_of_hires and self.phone_no:
+                jd().update_job(issue_key, update_jb_dict)
+                mb.showinfo("Info", "Selected Jobs updated successfully", parent=self.top)
+                if jt.selected_job_id:
+                    x = jt.selected_job_id.pop()
+                    y = jt.issue_key_list.pop()
+                    z = jt.update_values.pop()
+                    print("Pop elements", x, y, z)
+                jt(self.root).jobs_table(self.first_frame)
+                self.cancel()
+            else:
+                mb.showwarning('Warning', 'Please fill in the all the details', parent=self.top)
+        except (ValueError, AttributeError) as e:
+            print(e)
