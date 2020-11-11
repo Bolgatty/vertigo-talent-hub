@@ -7,25 +7,27 @@ from src.db.jd_manager import JDManager as jd
 from src.gui.jobs_table_display_gui import JobsTable as jt
 from tkinter import messagebox as mb
 
+
 class JobGeneratepdf:
 
-    def generate_pdf(self):
+    def generate_pdf(self, root):
         """
             method called when Generate Job button is clicked from job_management initial screen
         """
         if jt.selected_job_id:
-            if mb.askyesno("PDF Generate Confirmation", "Are you sure you want to generate pdf for the selected job ?"):
+            if mb.askyesno("PDF Generate Confirmation",
+                           "Are you sure you want to generate pdf for the selected job ?", parent=root):
                 for i in jt.issue_key_list:
                     self.pdf_generator(i)
-                mb.showinfo("Info", "PDF and DOCx files generated successfully!")
+                mb.showinfo("Info", "PDF and DOCx files generated successfully!", parent=root)
         else:
-            mb.showerror("Error", "Please select the job you want to generate pdf for")
+            mb.showerror("Error", "Please select the job you want to generate pdf for", parent=root)
 
 
     def pdf_generator(self, issue_key):
 
         final = Document()
-        final.add_picture('images/logo.PNG', width=Inches(1.50))
+        final.add_picture('src/gui/images/logo.PNG', width=Inches(1.50))
         last_pic = final.paragraphs[-1]
         last_pic.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
