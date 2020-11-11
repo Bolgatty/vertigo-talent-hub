@@ -10,5 +10,5 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.attributes("-topmost", False)
     root.lower()
-    obj = TalentHubGUI(root)
+    TalentHubGUI(root)
     root.mainloop()
