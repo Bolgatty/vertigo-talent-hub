@@ -19,8 +19,8 @@ class JobsTable:
         self.label_font = 5
         self.label_bg = 'SystemButtonFace'
         self.bg_frame = 'white'
-        self.im_checked = ImageTk.PhotoImage(Image.open("images/icons/check.png"))
-        self.im_unchecked = ImageTk.PhotoImage(Image.open("images/icons/uncheck.png"))
+        self.im_checked = ImageTk.PhotoImage(Image.open("src/gui/images/icons/check.png"))
+        self.im_unchecked = ImageTk.PhotoImage(Image.open("src/gui/images/icons/uncheck.png"))
 
     def jobs_table(self, first_frame):
         """
@@ -54,7 +54,7 @@ class JobsTable:
         self.tv.tag_configure('unchecked', image=self.im_unchecked)
 
         self.columns = ("#0", "#1", "#2", "#3", "#4", "#5")
-        column_text = ("","Job ID","Job Title","Company Name","Application Deadline","Issue Key")
+        column_text = ("", "Job ID", "Job Title","Company Name","Application Deadline","Issue Key")
 
         for x in range(len(self.columns)):
             self.tv.heading(self.columns[x], text=column_text[x])
@@ -111,13 +111,6 @@ class JobsTable:
             self.item = self.tv.item(self.tv.focus())
 
             if tag == "checked":
-                #self.tv.item(rowid, tags="unchecked")
-                # self.selected_job_id.remove(self.item['values'][0])
-                # self.issue_key_list.remove(self.item['values'][4])
-                # self.update_values.remove(self.item['values'])
-                # print(self.update_values)
-                # print(self.selected_job_id)
-                # print(self.issue_key_list)
                 JobsTable.selected_job_id.remove(self.item['values'][0])
                 JobsTable.issue_key_list.remove(self.item['values'][4])
                 JobsTable.update_values.remove(self.item['values'])
@@ -138,7 +131,6 @@ class JobsTable:
                 print(JobsTable.update_values)
                 print(JobsTable.selected_job_id)
                 print(JobsTable.issue_key_list)
-                self.set_cell_value(event)
 
         except IndexError as e:
             print(e)

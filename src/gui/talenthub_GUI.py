@@ -89,11 +89,3 @@ class TalentHubGUI:
         _class(win_import_resume)
         #win_import_resume.attributes("-topmost", True)
 
-
-if __name__ == '__main__':
-    root = tk.Tk()
-    root.attributes("-topmost", False)
-    root.lower()
-    TalentHubGUI(root)
-    root.mainloop()
-

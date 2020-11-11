@@ -12,6 +12,7 @@ from src.gui.delete_job_gui import DeleteJob as dj
 from src.db.generate_pdf import JobGeneratepdf as gpdf
 
 
+
 class JobManagement:
     """
      class that defines the methods responsible for Job Management Screen GUI
@@ -52,7 +53,7 @@ class JobManagement:
         self.first_frame = tk.Frame(self.root, bg=self.bg_frame)
         self.first_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-        img = ImageTk.PhotoImage(Image.open("images/poly.png"))
+        img = ImageTk.PhotoImage(Image.open("src/gui/images/poly.png"))
         panel = tk.Label(self.first_frame, image=img)
         panel.image = img
         panel.place(relx=0, rely=0)
@@ -64,7 +65,7 @@ class JobManagement:
         delete_job_button.place(relx=0.63, rely=0.12, relwidth=0.25, relheight=0.1)
 
         generate_pdf = ttk.Button(self.first_frame, text="Generate PDF/DOCx",
-                                command=gpdf().generate_pdf)
+                                command=lambda:gpdf().generate_pdf(self.root))
         generate_pdf.place(relx=0.63, rely=0.75, relwidth=0.25, relheight=0.1)
 
         update_job = ttk.Button(self.first_frame, text="Update Job",
@@ -75,6 +76,3 @@ class JobManagement:
         style.configure("TButton", font=(None, 12, 'bold'))
 
         jt(self.root).jobs_table(self.first_frame)
-
-
-
