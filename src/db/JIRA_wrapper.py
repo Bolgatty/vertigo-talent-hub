@@ -6,9 +6,9 @@ from src.db.create_JIRA_task import JiraTasks
 
 
 class JIRAWrapper:
-    user_name = "talent.bolgatty20@gmail.com"
-    api_token = "WFDMSsAdUw8nukLagC4a13D7"
-    server = "https://talent-jira.atlassian.net/"
+    user_name = ""
+    api_token = ""
+    server = ""
     jira = JiraTasks(user_name, api_token, server)
 
     def JIRA_connect(self):
