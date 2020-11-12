@@ -6,10 +6,8 @@ import tkinter as tk
 from time import strftime, time
 
 import datetime as dt
-#from src.gui.import_resumeGUI import ImportResumeGUI as irg
 from src.gui.import_resumeGUI import ImportResumeGUI as irg
 from src.gui.jd_management_gui import JobManagement as jbm
-#from src.tools.globals import Globals as gb
 from src.tools.globals import Globals as gb
 
 
@@ -77,7 +75,7 @@ class TalentHubGUI:
         self.create_button("Display Sheet", row=15, col=110, padx=0, pady=10)
         self.create_button("Export Data", row=17, col=110, padx=0, pady=10)
 
-    def create_button(self, text, row, col, padx=0, pady=0,**kwargs):
+    def create_button(self, text, row, col, padx=0, pady=0, **kwargs):
         but = tk.Button(
             self.frame, text=text, width=13, background=gb.btn_main_bg,
             command=lambda: self.new_window(kwargs['_class']))
@@ -86,6 +84,6 @@ class TalentHubGUI:
 
     def new_window(self, _class):
         win_import_resume = tk.Toplevel(self.root)
-        _class(win_import_resume)
+        _class(win_import_resume, self.root)
         #win_import_resume.attributes("-topmost", True)
 
