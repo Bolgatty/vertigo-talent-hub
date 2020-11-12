@@ -1,3 +1,5 @@
 jira
 pyresume
 pyparser
+python-docx
+docx2pdf

@@ -24,7 +24,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": "TES",
+            "project": "TH",
             "summary": summary,
             "description": json_string,
             "labels": label,

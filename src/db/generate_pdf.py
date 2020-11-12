@@ -23,16 +23,14 @@ class JobGeneratepdf:
         else:
             mb.showerror("Error", "Please select the job you want to generate pdf for", parent=root)
 
-
     def pdf_generator(self, issue_key):
-
         final = Document()
         final.add_picture('src/gui/images/logo.PNG', width=Inches(1.50))
         last_pic = final.paragraphs[-1]
         last_pic.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
         final.add_heading('About US', 0)
-        about_us = Document('about.docx')
+        about_us = Document('src/gui/about.docx')
 
         # for element in about_us.element.body:
         #     final.element.body.append(element)
