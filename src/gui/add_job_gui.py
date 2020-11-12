@@ -297,8 +297,13 @@ class AddJob:
                 jd().add_issue_key(jb_dict)
                 jd().update_job_id_tracker(self.id)
                 mb.showinfo('Saved', 'Saved New JOB into Jira Database', parent=self.top)
-                jt(self.root).jobs_table(self.first_frame)
                 self.cancel()
+                if jt.selected_job_id:
+                    x = jt.selected_job_id.pop()
+                    y = jt.issue_key_list.pop()
+                    z = jt.update_values.pop()
+                    print("Pop elements", x, y, z)
+                jt(self.root).jobs_table(self.first_frame)
             else:
                 mb.showwarning('Warning', 'Please fill in the all the details', parent=self.top)
         except (ValueError, AttributeError) as e:

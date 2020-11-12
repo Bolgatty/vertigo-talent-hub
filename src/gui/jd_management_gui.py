@@ -17,12 +17,13 @@ class JobManagement:
     """
      class that defines the methods responsible for Job Management Screen GUI
     """
-    def __init__(self, win):
+    def __init__(self, toplevel_window, master):
         """
          constructor will be called from main file when JobManagement GUI's class object is initiated
-         :param win: an instance of Tkinter’s Tk class that creates a window
+         :param toplevel_window: toplevel window that is sent as parameter from talenthub.
+         :param master:
          """
-        self.root = win
+        self.root = toplevel_window
         self.root.grab_set()
         self.issue_key = None
         self.entry_company_name = None

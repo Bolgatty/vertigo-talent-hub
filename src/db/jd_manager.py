@@ -10,7 +10,7 @@ class JDManager:
 
     def __init__(self):
         self.label = "jobs"
-        self.issue_key = 'TES-74'
+        self.issue_key = 'TH-128'
 
     def get_particular_desc(self, issue_key):
         particular_desc = jw().retrieve_spefic_issue_desc(issue_key)
@@ -19,6 +19,7 @@ class JDManager:
 
     def job_id_generator(self):
         job_id_tracker = jw().retrieve_spefic_issue_desc(self.issue_key)
+        print(type(job_id_tracker), job_id_tracker)
         job_id_desc = js().deserialization(job_id_tracker)
         id = int(job_id_desc['id'])
         job_id = id+1
