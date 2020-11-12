@@ -6,9 +6,9 @@ from src.db.create_JIRA_task import JiraTasks
 
 
 class JIRAWrapper:
-    user_name = ""
-    api_token = ""
-    server = ""
+    user_name = "talent.bolgatty20@gmail.com"
+    api_token = "WFDMSsAdUw8nukLagC4a13D7"
+    server = "https://talent-jira.atlassian.net/"
     jira = JiraTasks(user_name, api_token, server)
 
     def JIRA_connect(self):
@@ -24,7 +24,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": "TES",
+            "project": "TH",
             "summary": summary,
             "description": json_string,
             "labels": label,
