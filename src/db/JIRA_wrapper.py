@@ -10,8 +10,9 @@ class JIRAWrapper:
     user_name = config['jira_connect']['user_name']
     api_token = config['jira_connect']['api_token']
     server = config['jira_connect']['server']
-    project = config['jira_connect']['project']
+
     jira = JiraTasks(user_name, api_token, server)
+
 
     def JIRA_connect(self):
         self.jira = JiraTasks(self.user_name, self.api_token, self.server)
