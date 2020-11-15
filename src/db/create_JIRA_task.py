@@ -10,7 +10,7 @@ class JiraTasks:
     """
     def __init__(self, user_name, api_token, server):
         self.jira = JIRA(basic_auth=(user_name, api_token), options={"server": server})
-        self.project = 'project=TH'
+        self.project = 'project=SBT'
 
 
     def create_issue(self, data):

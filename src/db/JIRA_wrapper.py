@@ -3,12 +3,14 @@ author : Ashwini
 date: 25/9/2020
 """
 from src.db.create_JIRA_task import JiraTasks
+from src.config.talent_hunt_config import config
 
 
 class JIRAWrapper:
-    user_name = ""
-    api_token = ""
-    server = ""
+    user_name = config['jira_connect']['user_name']
+    api_token = config['jira_connect']['api_token']
+    server = config['jira_connect']['server']
+    project = config['jira_connect']['project']
     jira = JiraTasks(user_name, api_token, server)
 
     def JIRA_connect(self):
@@ -24,7 +26,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": "TH",
+            "project": "SBT",
             "summary": summary,
             "description": json_string,
             "labels": label,
