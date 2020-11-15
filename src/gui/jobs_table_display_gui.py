@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-from src.db.jd_manager import JDManager as jd
+from src.tools.thread_pool_jd import ThreadPoolJDM as jdm
 
 
 class JobsTable:
@@ -67,7 +67,10 @@ class JobsTable:
         self.tv.column('#5', minwidth=0, width=150, anchor='c')
 
 
-        jobs = jd().fetch_all_jobs()
+        #jobs = jd().fetch_all_jobs()
+        #Thread class where Job manager function fetch all jobs is called through thread class to run in a separate thread.
+        jobs = jdm(self.root).workerThread1()
+        print(jobs)
 
         for i in jobs:
             self.tv.insert('', 'end', tags="unchecked",
