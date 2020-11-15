@@ -5,8 +5,9 @@ from docx.shared import Pt
 from docx.shared import Inches
 from src.db.jd_manager import JDManager as jd
 from src.gui.jobs_table_display_gui import JobsTable as jt
+from src.tools.thread_pool_jdPDF import ThreadPooljdPDF as tpdf
 from tkinter import messagebox as mb
-
+import tkinter as tk
 
 class JobGeneratepdf:
 
@@ -44,7 +45,10 @@ class JobGeneratepdf:
             paragraph_format = paragraph.paragraph_format
             paragraph_format.space_after = Pt(2)
 
-        job_dict = jd().get_particular_desc(issue_key)
+        root = tk.Toplevel()
+
+        #Thread program which inturn calls Job Manager method get_particular_desc, which runs in a separate thread.
+        job_dict = tpdf(root, issue_key).workerThread1(issue_key)
 
         final.add_heading(job_dict['job_id']+' : ' + job_dict['job_title'], 1)
 

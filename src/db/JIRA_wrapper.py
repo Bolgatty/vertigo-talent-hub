@@ -10,6 +10,7 @@ class JIRAWrapper:
     user_name = config['jira_connect']['user_name']
     api_token = config['jira_connect']['api_token']
     server = config['jira_connect']['server']
+
     jira = JiraTasks(user_name, api_token, server)
 
 
@@ -26,7 +27,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": "TH",
+            "project": "SBT",
             "summary": summary,
             "description": json_string,
             "labels": label,
