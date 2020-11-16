@@ -1,3 +1,5 @@
+configparser
+
 jira
 pyresume
 
@@ -8,8 +10,9 @@ Pillow
 tkcalendar
 
 pyresparser
-# spaCy
+#spaCy
 python -m spacy download en_core_web_sm
 
-# nltk
+#nltk
 python -m nltk.downloader words
+
