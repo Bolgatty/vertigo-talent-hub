@@ -58,4 +58,5 @@ class JobGeneratepdf:
         filename = job_dict['job_id']
         final.save(filename+'.docx')
 
-        # convert(filename+'.docx', filename+'.pdf')
+        convert(filename + '.docx',
+                'C:/Users/user-name/vertigo-talent-hunt/give the path where you needed' + filename + '.pdf')
