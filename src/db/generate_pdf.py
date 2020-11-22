@@ -60,3 +60,10 @@ class JobGeneratepdf:
 
         convert(filename + '.docx',
                 'C:/Users/user-name/vertigo-talent-hunt/give the path where you needed' + filename + '.pdf')
+
+        for line in final.paragraphs:
+            with open(filename + 'txt', 'a') as wf:
+                wf.write(line.text + "\n")
+
+
+
