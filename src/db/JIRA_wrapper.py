@@ -27,7 +27,7 @@ class JIRAWrapper:
 
     def add_new_issue_JiraDB(self, json_string, summary, label):
         new_data = {
-            "project": "SBT",
+            "project": "TH",
             "summary": summary,
             "description": json_string,
             "labels": label,
@@ -46,7 +46,7 @@ class JIRAWrapper:
         summary_lists = self.jira.fetch_summary_basedon_label(label)
         return summary_lists
 
-    def retrive_desc(self, label):
+    def retrive_label_desc(self, label):
         desc_lists = self.jira.fetch_desc_basedon_label(label)
         return desc_lists
 

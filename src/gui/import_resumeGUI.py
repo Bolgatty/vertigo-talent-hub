@@ -5,7 +5,6 @@ Program : This program contains Import Resume GUI"""
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
-
 from datetime import datetime
 from src.tools.resume_analyser import ResumeAnalyser
 from src.tools.globals import Globals as gb

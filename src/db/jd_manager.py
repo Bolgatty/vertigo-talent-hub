@@ -19,7 +19,6 @@ class JDManager:
 
     def job_id_generator(self):
         job_id_tracker = jw().retrieve_spefic_issue_desc(self.issue_key)
-        print(type(job_id_tracker), job_id_tracker)
         job_id_desc = js().deserialization(job_id_tracker)
         id = int(job_id_desc['id'])
         job_id = id+1
@@ -50,8 +49,7 @@ class JDManager:
         print('Updated issue key in Jira')
 
     def fetch_all_jobs(self):
-        label = "jobs"
-        jobs_list = jw().retrive_desc(label)
+        jobs_list = jw().retrive_label_desc(self.label)
         job_dict = []
         for jobs in jobs_list:
             job = js().deserialization(jobs)

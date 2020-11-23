@@ -53,14 +53,14 @@ class ResumeAnalyser:
         return matching_desc
 # --------------------
 
-    def save_new_candidate_resume(self, data, file):
+    def save_new_candidate_resume(self, data, vendor_label):
         """
         method called from ImportResumeGUI().save_candidate() to save the new candidate in JIRA
         which again calls DatabaseManager's class method add_issue_key()
         :param file: resume's file path
         :param data: dict object
         """
-        db().add_issue_key(data, file)
+        db().add_issue_key(data, vendor_label)
 
     def replace_candidate_resume(self, new_data, old_data):
         """

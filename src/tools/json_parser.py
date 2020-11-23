@@ -13,7 +13,6 @@ class JsonParser:
 
     #Convert python objects into Json strings : Serialization
     def serialization(self, dict_data):
-        print(dict_data)
         self.json_serstr = json.dumps(dict_data, sort_keys=True, indent=3)
         return self.json_serstr
 

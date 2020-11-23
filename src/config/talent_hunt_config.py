@@ -2,11 +2,11 @@
  Author : Varsha
  Date   : 31/10/2020
 """
-import configparser
 from configparser import ConfigParser
 
 # create a file to save the path of .ini file and create a config .
-file = r'...///'
+
+file = r'D:\Bolgaty\Git Repo\vertigo-talent-hub\src\config\talenthunt.ini'
 config = ConfigParser()
 config.read(file)
 

@@ -66,4 +66,3 @@ class JobGeneratepdf:
                 wf.write(line.text + "\n")
 
 
-

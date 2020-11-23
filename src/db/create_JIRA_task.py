@@ -10,7 +10,7 @@ class JiraTasks:
     """
     def __init__(self, user_name, api_token, server):
         self.jira = JIRA(basic_auth=(user_name, api_token), options={"server": server})
-        self.project = 'project=SBT'
+        self.project = 'project=TH'
 
 
     def create_issue(self, data):
@@ -44,8 +44,10 @@ class JiraTasks:
         all_issues = self.jira.search_issues(self.project)
         for issues in all_issues:
             labels = issues.fields.labels
-            if labels and labels[0] == label:
-                desc_list.append(issues.fields.description)
+            #if labels and labels[0] == label:
+            for i in labels:
+                if label == i:
+                    desc_list.append(issues.fields.description)
         return desc_list
 
     def fetch_summary_basedon_label(self, label):
