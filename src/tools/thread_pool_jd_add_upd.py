@@ -1,14 +1,14 @@
 """Author : Padmavathi Vempadi
-Date : 30/10/2020
+Date : 19/11/2020
 Program : Is a thread program along with the progress bar gui using queues. which acts like an interface between
-import_resumeGUI and resume_analyser
+JD in add_job , update_job GUI's and JD manager while saving add & update job details into the JIRA.
 """
 import tkinter as tk
 import tkinter.ttk as ttk
 import time
 from threading import *
 import queue
-from src.tools.resume_analyser import ResumeAnalyser
+from src.db.jd_manager import JDManager as jd
 
 class GuiProgressbar:
     def __init__(self, master, queue):
@@ -57,22 +57,24 @@ class GuiProgressbar:
                 # expect this branch to be taken in this case
                 pass
 
-class ThreadPoolIR:
+class ThreadPoolAddUpdate:
     """
     Launch the main part of the GUI and the worker thread. periodicCall and
     endApplication could reside in the GUI part, but putting them here
     means that you have all the thread controls in a single place.
     """
-    def __init__(self, master, file_path, check_tag, new_data):
+    def __init__(self, master, check_tag, jb_dict, id, issue_key, update_jb_dict):
         """
         Start the GUI and the asynchronous threads. We are in the main
         (original) thread of the application, which will later be used by
         the GUI as well. We spawn a new thread for the worker (I/O).
         """
         self.master = master
-        self.file_path_ra = file_path
+        self.jb_dict = jb_dict
         self.check_tagger = check_tag
-        self.new_data = new_data
+        self.id = id
+        self.issue_key = issue_key
+        self.update_jb_dict = update_jb_dict
 
         # Create the queue
         self.queue = queue.Queue()
@@ -86,15 +88,16 @@ class ThreadPoolIR:
         self.thread1 = Thread(target=self.workerThread1)
         print(self.thread1)
         self.thread1.start()
-        print("control on child thread", current_thread().getName())
-        print("is child thread active", self.thread1.is_alive())  # to check the thread is still alive or not
+        print("control on child Add_Update thread", current_thread().getName())
+        print("is child Add_Updatethread active", self.thread1.is_alive())  # to check the thread is still alive or not
         self.thread1.join()
-        print("is child thread active", self.thread1.is_alive())  # to check the thread is still alive or not
+        print("is child Add_Update thread active", self.thread1.is_alive())  # to check the thread is still alive or not
 
         # Start the periodic call in the GUI to check if the queue contains
         # anything
         self.periodicCall()
         self.master.withdraw()
+        #self.master.deiconify()
 
     def periodicCall(self):
         """
@@ -114,38 +117,21 @@ class ThreadPoolIR:
         a 'select(  )'. One important thing to remember is that the thread has
         to yield control pretty regularly, by select or otherwise.
         """
-        # while self.running:
-        # To simulate asynchronous I/O, we create a random number at
-        # random intervals. Replace the following two lines with the real
-        # thing.
+        #while self.running:
+            # To simulate asynchronous I/O, we create a random number at
+            # random intervals. Replace the following two lines with the real
+            # thing.
 
-        if (self.check_tagger == "parse_resume"):
-            self.dict = ResumeAnalyser().parse_resume(self.file_path_ra)
-            print(self.dict)
-            msg = "Import Resume parse-resume in the Queue"
+        if (self.check_tagger == "add_job_save"):
+            msg = "JD - add job in the Queue"
+            jd().add_issue_key(self.jb_dict)
+            jd().update_job_id_tracker(self.id)
             self.queue.put(msg)
-            return self.dict
 
-        elif (self.check_tagger == "json_validation"):
-            self.check_duplicate = ResumeAnalyser().json_validation(self.new_data)
-            msg = "Import Resume json_validation in the Queue"
+        elif (self.check_tagger =="update_job_save"):
+            msg = "JD - update job in the Queue"
+            jd().update_job(self.issue_key, self.update_jb_dict)
             self.queue.put(msg)
-            return self.check_duplicate
-
-        elif (self.check_tagger == "matched_desc"):
-            self.matched_desc1 = ResumeAnalyser().get_matched_desc(self.new_data)
-            msg = "Import Resume matched_desc in the Queue"
-            self.queue.put(msg)
-            print(self.matched_desc1)
-            return self.matched_desc1
-
-        elif (self.check_tagger == "save_new_candidate_resume"):
-            new_id = ResumeAnalyser().save_new_candidate_resume(self.new_data, self.file_path_ra)
-            msg = "Import Resume save_new_candidate_resume in the Queue"
-            return new_id
-
-        #if (self.check_tagger == "replace_candidate_resume"):
-            #ResumeAnalyser().replace_candidate_resume(self.data_list, self.matched_desc)
 
     def endApplication(self):
         self.running = 0

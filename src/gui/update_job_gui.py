@@ -6,12 +6,14 @@ from src.db.jd_manager import JDManager as jd
 from src.gui.jobs_table_display_gui import JobsTable as jt
 import tkcalendar as tc
 import threading
+from src.tools.thread_pool_jd_add_upd import ThreadPoolAddUpdate as tpau
 
 class UpdateJob:
     def __init__(self, root, first_frame):
         print("Update contructor")
         self.first_frame = first_frame
         self.root = root
+        self.root.grab_set()
         self.bg_panel_header = '#000000'
         self.button_color = '#00917c'
         self.save_button_color = 'red'
@@ -247,7 +249,8 @@ class UpdateJob:
         inner_frame_11.pack(fill="x", pady=10)
 
         update_button = tk.Button(inner_frame_11, text="Save", bg=self.button_color, font=self.button_font,
-                                fg=self.button_fg, command=threading.Thread(target=lambda: self.update_jira(issue_key, selected_job_id, self.top)).start)
+                                fg=self.button_fg, command=lambda: self.update_jira(issue_key, selected_job_id, self.top))
+                                #fg=self.button_fg, command=threading.Thread(target=lambda: self.update_jira(issue_key, selected_job_id, self.top)).start)
         update_button.pack(side="left", padx=180, pady=20)
 
         cancel_button = tk.Button(inner_frame_11, text="Cancel", bg=self.button_color, font=self.button_font,
@@ -314,7 +317,16 @@ class UpdateJob:
 
         try:
             if self.no_of_hires and self.phone_no:
-                jd().update_job(issue_key, update_jb_dict)
+                #jd().update_job(issue_key, update_jb_dict)
+
+                """thread module - starts"""
+                self.check_tag = "update_job_save"
+                self.id = 0
+                self.jb_dict = []
+                self.master = tk.Toplevel()
+                tpau(self.master, self.check_tag, self.jb_dict, self.id, issue_key, update_jb_dict)
+                """thread module - ends"""
+
                 mb.showinfo("Info", "Selected Jobs updated successfully", parent=self.top)
                 if jt.selected_job_id:
                     x = jt.selected_job_id.pop()
