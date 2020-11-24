@@ -1,7 +1,7 @@
 """Author : Padmavathi Vempadi
 Date : 30/11/2020
 Program : Is a thread program along with the progress bar gui using queues. which acts like an interface between
-import_resumeGUI and resume_analyser
+Job Manage GUI through Jobs_table_display_gui and jd_manager for database JIRA.
 """
 import tkinter as tk
 import tkinter.ttk as ttk
