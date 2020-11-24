@@ -6,6 +6,7 @@ import tkcalendar as tc
 import threading
 from src.db.jd_manager import JDManager as jd
 from src.gui.jobs_table_display_gui import JobsTable as jt
+from src.tools.thread_pool_jd_add_upd import ThreadPoolAddUpdate as tpau
 
 class AddJob:
 
@@ -13,6 +14,7 @@ class AddJob:
         print("Addjob contructor")
         self.first_frame = first_frame
         self.root = root
+        self.root.grab_set()
         self.bg_panel_header = '#000000'
         self.button_color = '#00917c'
         self.save_button_color = 'red'
@@ -232,7 +234,8 @@ class AddJob:
         inner_frame_11.pack(fill="x", pady=10)
 
         save_button = tk.Button(inner_frame_11, text="Save", bg=self.button_color, font=self.button_font,
-                                fg=self.button_fg, command=threading.Thread(target=lambda: self.save_details(jb_dict, self.top)).start)
+                                fg=self.button_fg, command=lambda: self.save_details(jb_dict, self.top))
+                                #fg=self.button_fg, command=threading.Thread(target=lambda: self.save_details(jb_dict, self.top)).start)
         save_button.pack(side="left", padx=180, pady=20)
 
 
@@ -294,8 +297,17 @@ class AddJob:
 
         try:
             if self.no_of_hires and self.phone_no:
-                jd().add_issue_key(jb_dict)
-                jd().update_job_id_tracker(self.id)
+                #jd().add_issue_key(jb_dict)
+                #jd().update_job_id_tracker(self.id)
+                """thread module - starts"""
+                self.check_tag = "add_job_save"
+                self.issue_key = 0
+                self.update_jb_dict = []
+                self.master = tk.Toplevel()
+
+                tpau(self.master, self.check_tag, jb_dict, self.id, self.issue_key, self.update_jb_dict)
+                """thread module - ends"""
+
                 mb.showinfo('Saved', 'Saved New JOB into Jira Database', parent=self.top)
                 self.cancel()
                 if jt.selected_job_id:

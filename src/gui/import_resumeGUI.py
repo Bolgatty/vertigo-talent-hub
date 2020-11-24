@@ -9,6 +9,7 @@ from tkinter import messagebox as mb
 from datetime import datetime
 from src.tools.resume_analyser import ResumeAnalyser
 from src.tools.globals import Globals as gb
+from src.tools.thread_pool_ir import ThreadPoolIR as tpir
 
 
 class ImportResumeGUI:
@@ -24,6 +25,7 @@ class ImportResumeGUI:
         """
         self.root = root  # main window of the import resume screen
         self.master = master  # base window for all modules
+        self.root.grab_set()
         self.root.geometry('740x500+0+0')
         self.root.resizable(False, False)
         self.root.title('Import Resume')
@@ -92,7 +94,13 @@ class ImportResumeGUI:
 
         try:
 
-            self.dict = ResumeAnalyser().parse_resume(self.file.name)
+            #self.dict = ResumeAnalyser().parse_resume(self.file.name)
+            """thread module begins"""
+            check_tag = "parse_resume"
+            new_data = []
+            self.prog_root = tk.Toplevel()
+            self.dict = tpir(self.prog_root, self.file.name, check_tag, new_data).workerThread1()
+            """thread module ends"""
 
             if self.dict['email']:
                 candidate_email = self.dict['email']
@@ -199,20 +207,38 @@ class ConfirmWindow:
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         new_data['date'] = dt_string
 
-        check_duplicate = ResumeAnalyser().json_validation(new_data)
+        #check_duplicate = ResumeAnalyser().json_validation(new_data)
+
+        """thread module - begins"""
+        check_tag = "json_validation"
+        #self.master = tk.Toplevel()
+        check_duplicate = tpir(self.confirm_root, self.file.name, check_tag, new_data).workerThread1()
+        """thread module - ends"""
 
         if check_duplicate:
-            matched_desc = ResumeAnalyser().get_matched_desc(new_data)
+            #matched_desc = ResumeAnalyser().get_matched_desc(new_data)
+            """thread module - begins"""
+            check_tag = "matched_desc"
+            #self.master = tk.Toplevel()
+            matched_desc = tpir(self.confirm_root, self.file.name, check_tag, new_data).workerThread1()
+            """thread module - ends"""
+
             if mb.askyesno('Duplicate Existing', 'Candidate ' + matched_desc['name'] +
                                                  ' \'s resume is already existing!\n\n''Last Updated on ' +
                                                  matched_desc[
                                                      'date'] + '\n\n' 'Do you want to save updated Resume version??',
                            parent=self.confirm_root):
                 ResumeAnalyser().replace_candidate_resume(new_data, matched_desc)
+
                 mb.showinfo('Yes', 'Saved updated Resume', parent=self.confirm_root)
 
         else:
-            new_id = ResumeAnalyser().save_new_candidate_resume(new_data, file)
-            mb.showinfo('Saved', 'Saved New candidate into Jira Database', parent=self.confirm_root)
+            #new_id = ResumeAnalyser().save_new_candidate_resume(new_data, file)
+            """thread module - begins"""
+            check_tag = "save_new_candidate_resume"
+            #self.master = tk.Toplevel()
+            new_id = tpir(self.confirm_root, self.file, check_tag, new_data).workerThread1()
+            """thread module - ends"""
 
+            mb.showinfo('Saved', 'Saved New candidate into Jira Database', parent=self.confirm_root)
             print('Saved New candidate into Jira Database', new_id)
